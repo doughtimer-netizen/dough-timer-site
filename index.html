@@ -1,170 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dough Timer — Slow baking, made simple.</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dough Timer — Slow baking, made simple.</title>
 
-<style>
-  :root {
-    --bg: #faf5ef;
-    --card: #ffffff;
-    --text-main: #1f2933;
-    --text-muted: #6b7280;
-    --accent: #2ecc71;
-    --accent-dark: #27ae60;
-  }
+  <style>
+    :root {
+      --bg: #faf5ef;
+      --card: #ffffff;
+      --text-main: #1f2933;
+      --text-muted: #6b7280;
+      --accent: #2ecc71;
+      --accent-dark: #27ae60;
+      --border-subtle: #e5e7eb;
+    }
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-    background: var(--bg);
-    color: var(--text-main);
-    line-height: 1.6;
-  }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
 
-  /* NAVIGATION */
-  nav {
-    padding: 24px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--bg);
-    position: sticky;
-    top: 0;
-    z-index: 50;
-  }
+    /* NAVIGATION */
+    nav {
+      padding: 20px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(250,245,239,0.96);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(0,0,0,0.03);
+    }
 
-  nav .logo {
-    text-decoration: none;
-    color: var(--text-main);
-    font-weight: 700;
-    font-size: 22px;
-  }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-  nav .right a {
-    margin-left: 24px;
-    text-decoration: none;
-    color: var(--text-main);
-    font-size: 18px;
-  }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 20px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
 
-  nav .right a:hover {
-    color: var(--accent-dark);
-  }
+    .nav-left span {
+      font-size: 24px;
+    }
 
-  /* PAGE CONTAINER */
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 16px 120px;
-  }
+    .nav-links a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-size: 16px;
+    }
 
-  /* HERO SECTION */
-  .hero {
-    background: var(--card);
-    padding: 40px;
-    border-radius: 24px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    align-items: center;
-  }
+    .nav-links a:hover {
+      color: var(--accent-dark);
+    }
 
-  .hero-text {
-    flex: 1 1 420px;
-  }
+    /* LAYOUT */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 16px 120px;
+    }
 
-  .hero-text h1 {
-    font-size: 42px;
-    font-weight: 700;
-    margin-bottom: 16px;
-  }
+    /* HERO */
+    .hero {
+      background: var(--card);
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: center;
+    }
 
-  .hero-text p {
-    margin-bottom: 20px;
-    color: var(--text-muted);
-    font-size: 18px;
-  }
+    .hero-text {
+      flex: 1 1 420px;
+    }
 
-  .hero-list {
-    margin: 20px 0;
-    padding-left: 20px;
-    list-style: disc;
-    color: var(--text-main);
-  }
+    .hero-text h1 {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
 
-  .button {
-    background: var(--accent);
-    color: white;
-    display: inline-block;
-    padding: 14px 26px;
-    border-radius: 12px;
-    font-weight: 600;
-    text-decoration: none;
-    margin-top: 12px;
-    font-size: 18px;
-  }
+    .hero-text p {
+      margin-bottom: 18px;
+      color: var(--text-muted);
+      font-size: 18px;
+    }
 
-  .button:hover {
-    background: var(--accent-dark);
-  }
+    .hero-list {
+      margin: 16px 0;
+      padding-left: 20px;
+      list-style: disc;
+      color: var(--text-main);
+    }
 
-  /* FEATURES GRID */
-  .features-section {
-    margin-top: 80px;
-  }
+    .button {
+      background: var(--accent);
+      color: white;
+      display: inline-block;
+      padding: 14px 26px;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 10px;
+      font-size: 17px;
+    }
 
-  .features-section h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
-  }
+    .button:hover {
+      background: var(--accent-dark);
+    }
 
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-    margin-top: 24px;
-  }
+    .hero-note {
+      color: var(--text-muted);
+      margin-top: 10px;
+      font-size: 14px;
+    }
 
-  .feature-card {
-    background: var(--card);
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
+    .hero-mock {
+      flex: 1 1 320px;
+      min-width: 260px;
+    }
 
-  .feature-card h3 {
-    font-size: 20px;
-    margin-bottom: 12px;
-  }
+    .mock-card {
+      background: #f9fafb;
+      border-radius: 26px;
+      padding: 24px 20px;
+      box-shadow: inset 0 0 0 1px rgba(148,163,184,0.25);
+    }
 
-  .feature-card p {
-    color: var(--text-muted);
-  }
+    .mock-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
 
-  /* FOOTER */
-  footer {
-    margin-top: 80px;
-    padding: 40px 16px;
-    text-align: center;
-    color: var(--text-muted);
-  }
-</style>
+    .mock-main-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .mock-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      font-size: 13px;
+    }
+
+    .mock-pill {
+      flex: 1;
+      border-radius: 12px;
+      padding: 8px 10px;
+      background: white;
+      border: 1px solid var(--border-subtle);
+      text-align: center;
+    }
+
+    .mock-pill strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .mock-cta {
+      margin-top: 8px;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: white;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* FEATURES */
+    .section {
+      margin-top: 80px;
+    }
+
+    .section h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .section p.lead {
+      color: var(--text-muted);
+      max-width: 720px;
+      margin-bottom: 20px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      padding: 22px 22px 24px;
+      border-radius: 18px;
+      box-shadow: 0 8px 18px rgba(15,23,42,0.06);
+      border: 1px solid rgba(148,163,184,0.18);
+    }
+
+    .feature-emoji {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .feature-card h3 {
+      font-size: 19px;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 32px 16px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 16px 18px;
+      }
+      .hero {
+        padding: 28px 22px 30px;
+      }
+      .hero-text h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- NAVIGATION -->
 <nav>
-  <a href="index.html" class="logo">🍞 Dough Timer</a>
-  <div class="right">
+  <div class="nav-left">
+    <span>🍞</span>
+    <a href="index.html" class="nav-logo">Dough Timer</a>
+  </div>
+  <div class="nav-links">
     <a href="#features">Features</a>
     <a href="privacy.html">Privacy</a>
     <a href="support.html">Support</a>
@@ -173,11 +276,13 @@
 
 <div class="container">
 
-  <!-- HERO SECTION -->
   <section class="hero">
     <div class="hero-text">
       <h1>Slow baking, made simple.</h1>
-      <p>Plan every rest, fold, and bake with a clear timeline that fits your day — not the other way around.</p>
+      <p>
+        Plan every rest, fold, and bake with a clear timeline that fits your day —
+        not the other way around.
+      </p>
 
       <ul class="hero-list">
         <li>Smart schedule from first mix to bake</li>
@@ -186,49 +291,82 @@
       </ul>
 
       <a class="button" href="#">Available on iPhone</a>
-
-      <p style="color: var(--text-muted); margin-top: 12px;">Built for sourdough bakers who like calm, not chaos.</p>
+      <p class="hero-note">
+        Built for sourdough bakers who like calm, not chaos.
+      </p>
     </div>
 
-    <!-- APP MOCKUP CARD -->
-    <div class="mockup">
-      <img src="https://via.placeholder.com/420x420?text=App+Screenshot" 
-           alt="App Screenshot"
-           style="width:100%;border-radius:20px;box-shadow:0 4px 14px rgba(0,0,0,0.15);" />
+    <div class="hero-mock">
+      <div class="mock-card">
+        <div class="mock-header">
+          <span>Dough Timer · Today</span>
+          <span style="color: var(--accent-dark); font-weight: 600;">Ready?</span>
+        </div>
+        <div class="mock-main-title">Ready to begin your dough?</div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">
+          Choose 1 or 2 baking sessions, then relax — Dough Timer keeps time.
+        </p>
+
+        <div class="mock-row">
+          <div class="mock-pill">
+            <strong>1×</strong>
+            Simple bake
+          </div>
+          <div class="mock-pill">
+            <strong>2×</strong>
+            Two-loaf weekend
+          </div>
+          <div class="mock-pill">
+            <strong>🗓</strong>
+            Bake planner
+          </div>
+        </div>
+
+        <div class="mock-cta">Start</div>
+      </div>
     </div>
   </section>
 
-  <!-- FEATURES SECTION -->
-  <section id="features" class="features-section">
+  <section id="features" class="section">
     <h2>Bake on your schedule, not your phone’s.</h2>
-    <p style="color: var(--text-muted); max-width: 700px;">
-      Dough Timer gives you a realistic plan for your dough, with adjustable steps that match how you already like to bake.
+    <p class="lead">
+      Dough Timer gives you a realistic plan for your dough, with adjustable steps
+      that match how you already like to bake.
     </p>
 
     <div class="features-grid">
-
       <div class="feature-card">
-        <h3>⏱️ Step-by-step timeline</h3>
-        <p>See every stage from levain to bake, with clear durations and step names you can customize.</p>
+        <div class="feature-emoji">⏱️</div>
+        <h3>Step-by-step timeline</h3>
+        <p>
+          See every stage from levain to bake, with clear durations and step names
+          you can customize before you start.
+        </p>
       </div>
 
       <div class="feature-card">
-        <h3>📅 Bake planner</h3>
-        <p>Pick when you want your bread out of the oven and let Dough Timer work backwards to map your day.</p>
+        <div class="feature-emoji">📅</div>
+        <h3>Bake planner</h3>
+        <p>
+          Pick when you want your bread out of the oven and let Dough Timer
+          work backwards to map your entire day.
+        </p>
       </div>
 
       <div class="feature-card">
-        <h3>🔔 Gentle reminders</h3>
-        <p>Notifications nudge you when it's time to fold, shape, or preheat — no loud alarms or clutter.</p>
+        <div class="feature-emoji">🔔</div>
+        <h3>Gentle reminders</h3>
+        <p>
+          Notifications nudge you when it’s time to fold, shape, or pre-heat —
+          no shrill alarms, no noisy clutter.
+        </p>
       </div>
-
     </div>
   </section>
 
   <footer>
     © 2025 Dough Timer — All rights reserved.
   </footer>
-
 </div>
 
 </body>
