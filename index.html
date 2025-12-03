@@ -1,314 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dough Timer – Slow baking, made simple</title>
-  <style>
-    :root {
-      --bg: #faf5ef;
-      --card: #ffffff;
-      --accent: #2ecc71;
-      --accent-dark: #27ae60;
-      --text-main: #1f2933;
-      --text-muted: #6b7280;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      background: radial-gradient(circle at top left, #fff7e9, #f3eee9);
-      color: var(--text-main);
-      line-height: 1.5;
-    }
-    .page {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 32px 16px 64px;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 32px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      font-size: 1.3rem;
-    }
-    .brand span.emoji {
-      font-size: 1.5rem;
-    }
-    nav a {
-      margin-left: 16px;
-      text-decoration: none;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-    nav a:hover {
-      color: var(--text-main);
-    }
-    .hero {
-      background: var(--card);
-      border-radius: 24px;
-      padding: 32px 24px;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 24px;
-      align-items: center;
-    }
-    .hero h1 {
-      font-size: 2.3rem;
-      margin-bottom: 12px;
-    }
-    .hero p {
-      color: var(--text-muted);
-      margin-bottom: 18px;
-    }
-    .hero ul {
-      list-style: none;
-      margin-bottom: 20px;
-    }
-    .hero ul li {
-      margin-bottom: 6px;
-    }
-    .hero ul li::before {
-      content: "• ";
-      color: var(--accent-dark);
-    }
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-    }
-    .btn-primary {
-      background: var(--accent);
-      border-radius: 999px;
-      padding: 10px 22px;
-      color: white;
-      border: none;
-      font-weight: 600;
-      cursor: default;
-      font-size: 0.95rem;
-      box-shadow: 0 10px 25px rgba(46, 204, 113, 0.5);
-    }
-    .cta-caption {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-    .mock {
-      background: #f4f4f8;
-      border-radius: 25px;
-      padding: 18px 14px;
-      border: 1px solid #e5e7eb;
-    }
-    .mock-header {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 12px;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-    .mock-main {
-      background: white;
-      border-radius: 18px;
-      padding: 14px 12px 18px;
-    }
-    .mock-title {
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .mock-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-    .mock-cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 6px;
-      margin-bottom: 18px;
-    }
-    .mock-card {
-      border-radius: 10px;
-      padding: 7px 5px;
-      background: #f9fafb;
-      font-size: 0.7rem;
-      text-align: center;
-    }
-    .mock-card span {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 3px;
-    }
-    .mock-footer-label {
-      font-size: 0.75rem;
-      margin-bottom: 4px;
-    }
-    .mock-button {
-      display: block;
-      width: 100%;
-      text-align: center;
-      background: var(--accent);
-      border-radius: 999px;
-      padding: 7px 0;
-      color: white;
-      font-weight: 600;
-      font-size: 0.8rem;
-    }
-    .section {
-      margin-top: 40px;
-    }
-    .section h2 {
-      font-size: 1.4rem;
-      margin-bottom: 10px;
-    }
-    .section p {
-      color: var(--text-muted);
-      max-width: 640px;
-      margin-bottom: 12px;
-    }
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-      gap: 16px;
-      margin-top: 16px;
-    }
-    .feature-card {
-      background: var(--card);
-      border-radius: 18px;
-      padding: 16px 14px;
-      box-shadow: 0 10px 28px rgba(15,23,42,0.05);
-    }
-    .feature-icon {
-      font-size: 1.3rem;
-      margin-bottom: 4px;
-    }
-    .feature-card h3 {
-      font-size: 1rem;
-      margin-bottom: 4px;
-    }
-    .feature-card p {
-      font-size: 0.85rem;
-      margin-bottom: 0;
-    }
-    footer {
-      margin-top: 40px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 8px;
-    }
-    footer a {
-      color: var(--accent-dark);
-      text-decoration: none;
-    }
-    @media (max-width: 768px) {
-      .hero {
-        grid-template-columns: minmax(0,1fr);
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dough Timer — Slow baking, made simple.</title>
+
+<style>
+  :root {
+    --bg: #faf5ef;
+    --card: #ffffff;
+    --text-main: #1f2933;
+    --text-muted: #6b7280;
+    --accent: #2ecc71;
+    --accent-dark: #27ae60;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    line-height: 1.6;
+  }
+
+  /* NAVIGATION */
+  nav {
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  nav .logo {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 700;
+    font-size: 22px;
+  }
+
+  nav .right a {
+    margin-left: 24px;
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 18px;
+  }
+
+  nav .right a:hover {
+    color: var(--accent-dark);
+  }
+
+  /* PAGE CONTAINER */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 16px 120px;
+  }
+
+  /* HERO SECTION */
+  .hero {
+    background: var(--card);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .hero-text {
+    flex: 1 1 420px;
+  }
+
+  .hero-text h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .hero-text p {
+    margin-bottom: 20px;
+    color: var(--text-muted);
+    font-size: 18px;
+  }
+
+  .hero-list {
+    margin: 20px 0;
+    padding-left: 20px;
+    list-style: disc;
+    color: var(--text-main);
+  }
+
+  .button {
+    background: var(--accent);
+    color: white;
+    display: inline-block;
+    padding: 14px 26px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 12px;
+    font-size: 18px;
+  }
+
+  .button:hover {
+    background: var(--accent-dark);
+  }
+
+  /* FEATURES GRID */
+  .features-section {
+    margin-top: 80px;
+  }
+
+  .features-section h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .feature-card {
+    background: var(--card);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .feature-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .feature-card p {
+    color: var(--text-muted);
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 80px;
+    padding: 40px 16px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+</style>
 </head>
+
 <body>
-  <div class="page">
-    <header>
-      <div class="brand">
-        <span class="emoji">🥖</span>
-        <span>Dough Timer</span>
-      </div>
-      <nav>
-        <a href="#features">Features</a>
-        <a href="#privacy">Privacy</a>
-        <a href="#support">Support</a>
-      </nav>
-    </header>
 
-    <section class="hero">
-      <div>
-        <h1>Slow baking, made simple.</h1>
-        <p>Plan every rest, fold, and bake with a clear timeline that fits your day – not the other way around.</p>
-        <ul>
-          <li>Smart schedule from first mix to bake</li>
-          <li>Adjust every step to match your dough</li>
-          <li>Stay on track with gentle notifications</li>
-        </ul>
-        <div class="cta-row">
-          <button class="btn-primary" disabled>Available on iPhone</button>
-          <span class="cta-caption">Built for sourdough bakers who like calm, not chaos.</span>
-        </div>
-      </div>
-      <div>
-        <div class="mock">
-          <div class="mock-header">Dough Timer · Today</div>
-          <div class="mock-main">
-            <div class="mock-title">Ready to begin your dough?</div>
-            <div class="mock-sub">Choose 1 or 2 baking sessions, then relax – we’ll keep time.</div>
-            <div class="mock-cards">
-              <div class="mock-card">
-                <span>1×</span>Simple bake
-              </div>
-              <div class="mock-card">
-                <span>2×</span>Two-loaf weekend
-              </div>
-              <div class="mock-card">
-                <span>📅</span>Bake planner
-              </div>
-            </div>
-            <div class="mock-footer-label">Next step</div>
-            <div class="mock-button">Start</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="features">
-      <h2>Bake on your schedule, not your phone’s.</h2>
-      <p>Dough Timer gives you a realistic plan for your dough, with adjustable steps that match how you already like to bake.</p>
-      <div class="features">
-        <div class="feature-card">
-          <div class="feature-icon">⏱️</div>
-          <h3>Step-by-step timeline</h3>
-          <p>See every stage from levain to bake, with clear durations and step names you can customize.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">📆</div>
-          <h3>Bake planner</h3>
-          <p>Pick when you want your bread out of the oven and let Dough Timer work backwards to map your day.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🔔</div>
-          <h3>Gentle reminders</h3>
-          <p>Notifications nudge you when it’s time to fold, shape, or preheat – no loud alarms or noisy clutter.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="privacy">
-      <h2>Privacy, the easy way.</h2>
-      <p>Dough Timer doesn’t collect, store, or transmit any personal data. There are no accounts, no trackers, and no analytics.</p>
-      <p>For the full privacy policy, visit the Privacy link you provided in the App Store listing.</p>
-    </section>
-
-    <section class="section" id="support">
-      <h2>Support & feedback</h2>
-      <p>Questions or ideas? I’d love to hear how you bake.</p>
-      <p>Email: <strong>doughtimer@gmail.com</strong></p>
-    </section>
-
-    <footer>
-      <span>© <span id="year"></span> Dough Timer. All rights reserved.</span>
-      <span>Built by an independent baker-developer.</span>
-    </footer>
+<!-- NAVIGATION -->
+<nav>
+  <a href="index.html" class="logo">🍞 Dough Timer</a>
+  <div class="right">
+    <a href="#features">Features</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="support.html">Support</a>
   </div>
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+</nav>
+
+<div class="container">
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Slow baking, made simple.</h1>
+      <p>Plan every rest, fold, and bake with a clear timeline that fits your day — not the other way around.</p>
+
+      <ul class="hero-list">
+        <li>Smart schedule from first mix to bake</li>
+        <li>Adjust every step to match your dough</li>
+        <li>Stay on track with gentle notifications</li>
+      </ul>
+
+      <a class="button" href="#">Available on iPhone</a>
+
+      <p style="color: var(--text-muted); margin-top: 12px;">Built for sourdough bakers who like calm, not chaos.</p>
+    </div>
+
+    <!-- APP MOCKUP CARD -->
+    <div class="mockup">
+      <img src="https://via.placeholder.com/420x420?text=App+Screenshot" 
+           alt="App Screenshot"
+           style="width:100%;border-radius:20px;box-shadow:0 4px 14px rgba(0,0,0,0.15);" />
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section id="features" class="features-section">
+    <h2>Bake on your schedule, not your phone’s.</h2>
+    <p style="color: var(--text-muted); max-width: 700px;">
+      Dough Timer gives you a realistic plan for your dough, with adjustable steps that match how you already like to bake.
+    </p>
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <h3>⏱️ Step-by-step timeline</h3>
+        <p>See every stage from levain to bake, with clear durations and step names you can customize.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>📅 Bake planner</h3>
+        <p>Pick when you want your bread out of the oven and let Dough Timer work backwards to map your day.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>🔔 Gentle reminders</h3>
+        <p>Notifications nudge you when it's time to fold, shape, or preheat — no loud alarms or clutter.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Dough Timer — All rights reserved.
+  </footer>
+
+</div>
+
 </body>
 </html>
